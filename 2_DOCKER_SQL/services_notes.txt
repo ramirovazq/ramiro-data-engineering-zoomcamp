@@ -16,6 +16,8 @@ docker run -it \
     -p 8080:80 \
     dpage/pgadmin4
 
+## running $ pgcli -h localhost -p 5432 -u root -d ny_taxi
+
 ## necessary to pg_admin admit connections in same network
 
 $ docker network create pg-network
