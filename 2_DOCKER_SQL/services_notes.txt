@@ -54,3 +54,11 @@ $ docker run -it \
   --port=5432 \
   --db=ny_taxi \
   --table_name=yellow_taxi_trips --url=${URL}
+
+
+  -- terraform
+  $ terraform init
+  $ export GOOGLE_CREDENTIALS='/Users/file.json'
+  $ terraform plan
+  $ terraform apply
+  $ terraform destroy
