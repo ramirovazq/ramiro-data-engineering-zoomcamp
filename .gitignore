@@ -2,3 +2,5 @@
 *.csv
 *.gz
 2_DOCKER_SQL/ny_taxi_postgres_data/
+
+terrademo/keys/*.json
