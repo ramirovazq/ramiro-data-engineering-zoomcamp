@@ -1,0 +1,11 @@
+Question 2. Docker networking and docker-compose 
+postgres:5432
+
+hostname
+services:
+  db:
+    container_name: postgres
+
+port 5432, is port in container
+   ports:
+      - '5433:5432'
