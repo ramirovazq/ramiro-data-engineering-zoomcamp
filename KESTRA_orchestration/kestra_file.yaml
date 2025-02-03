@@ -154,12 +154,120 @@ tasks:
               S.total_amount, S.payment_type, S.trip_type, S.congestion_surcharge
             );
 
+
+  - id: if_yellow
+    type: io.kestra.plugin.core.flow.If
+    condition: "{{ inputs.taxi == 'yellow' }}"
+    then:
+      - id: yellow_create_table
+        type: io.kestra.plugin.jdbc.postgresql.Queries
+        sql: |
+          CREATE TABLE if not exists {{render(vars.table)}} (
+            unique_row_id         TEXT,
+            filename              TEXT,
+            VendorID              TEXT, 
+            tpep_pickup_datetime TIMESTAMP WITHOUT TIME ZONE, 
+            tpep_dropoff_datetime TIMESTAMP WITHOUT TIME ZONE, 
+            passenger_count       BIGINT, 
+            trip_distance         FLOAT(53), 
+            RatecodeID            TEXT, 
+            store_and_fwd_flag    TEXT, 
+            PULocationID         TEXT, 
+            DOLocationID         TEXT, 
+            payment_type         BIGINT, 
+            fare_amount          FLOAT(53), 
+            extra                FLOAT(53), 
+            mta_tax              FLOAT(53), 
+            tip_amount           FLOAT(53), 
+            tolls_amount         FLOAT(53), 
+            improvement_surcharge  FLOAT(53), 
+            total_amount           FLOAT(53), 
+            congestion_surcharge   FLOAT(53)
+          )
+
+      - id: yellow_create_staging_table
+        type: io.kestra.plugin.jdbc.postgresql.Queries
+        sql: |
+          CREATE TABLE if not exists {{render(vars.staging_table)}} (
+            unique_row_id         TEXT,
+            filename              TEXT,
+            VendorID              TEXT, 
+            tpep_pickup_datetime TIMESTAMP WITHOUT TIME ZONE, 
+            tpep_dropoff_datetime TIMESTAMP WITHOUT TIME ZONE, 
+            passenger_count       BIGINT, 
+            trip_distance         FLOAT(53), 
+            RatecodeID            TEXT, 
+            store_and_fwd_flag    TEXT, 
+            PULocationID         TEXT, 
+            DOLocationID         TEXT, 
+            payment_type         BIGINT, 
+            fare_amount          FLOAT(53), 
+            extra                FLOAT(53), 
+            mta_tax              FLOAT(53), 
+            tip_amount           FLOAT(53), 
+            tolls_amount         FLOAT(53), 
+            improvement_surcharge  FLOAT(53), 
+            total_amount           FLOAT(53), 
+            congestion_surcharge   FLOAT(53)
+          )
+
+      - id: truncate_yellow_staging_table
+        type: io.kestra.plugin.jdbc.postgresql.Queries
+        sql: |
+          TRUNCATE TABLE {{render(vars.staging_table)}};
+
+      - id: yellow_copy_in_to_staging_table
+        type: io.kestra.plugin.jdbc.postgresql.CopyIn
+        format: CSV
+        from: "{{render(vars.data)}}"
+        table: "{{render(vars.staging_table)}}"
+        header: true
+        delimiter: ","
+        columns: [VendorID, tpep_pickup_datetime, tpep_dropoff_datetime, passenger_count, trip_distance, RatecodeID, store_and_fwd_flag, PULocationID, DOLocationID, payment_type, fare_amount, extra, mta_tax, tip_amount, tolls_amount, improvement_surcharge, total_amount, congestion_surcharge]
+
+      - id: yellow_add_unique_id_and_filename
+        type: io.kestra.plugin.jdbc.postgresql.Queries
+        sql: |
+          UPDATE {{render(vars.staging_table)}}
+            SET unique_row_id = md5(
+            COALESCE(CAST(VendorID as TEXT), '')  ||
+            COALESCE(CAST(tpep_pickup_datetime as TEXT), '') || 
+            COALESCE(CAST(tpep_dropoff_datetime as TEXT), '') ||
+            COALESCE(PULocationID, '') || 
+            COALESCE(DOLocationID, '') || 
+            COALESCE(CAST(fare_amount as TEXT), '') || 
+            COALESCE(CAST(trip_distance as TEXT), '')
+            ),
+            filename = '{{render(vars.data)}}';
+
+      - id: yellow_merge_data
+        type: io.kestra.plugin.jdbc.postgresql.Queries
+        sql: |
+          MERGE INTO {{render(vars.table)}} AS T
+          USING {{render(vars.staging_table)}} AS S
+          ON T.unique_row_id = S.unique_row_id
+          WHEN NOT MATCHED THEN
+            INSERT (
+              unique_row_id, filename VendorID, tpep_pickup_datetime, 
+              tpep_dropoff_datetime, passenger_count, trip_distance, 
+              RatecodeID, store_and_fwd_flag, PULocationID, DOLocationID, 
+              payment_type, fare_amount, extra, mta_tax, tip_amount, 
+              tolls_amount, improvement_surcharge, total_amount, congestion_surcharge
+            )
+            VALUES (
+              S.unique_row_id, S.filename VendorID, S.tpep_pickup_datetime, 
+              S.tpep_dropoff_datetime, S.passenger_count, S.trip_distance, 
+              S.RatecodeID, S.store_and_fwd_flag, S.PULocationID, S.DOLocationID, 
+              S.payment_type, S.fare_amount, S.extra, S.mta_tax, S.tip_amount, 
+              S.tolls_amount, S.improvement_surcharge, S.total_amount, S.congestion_surcharge
+            );
+
   - id: purge_files
     type: io.kestra.plugin.core.storage.PurgeCurrentExecutionFiles
 
-  - id: log_hello_world
+  - id: log_final_flow
     type: io.kestra.plugin.core.log.Log
-    message: Hello World! 🚀 RBVS
+    message: fin del flow {{render(vars.data)}}
 
 pluginDefaults:
   - type: io.kestra.plugin.jdbc.postgresql
