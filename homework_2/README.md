@@ -12,7 +12,8 @@ In this case I used Kestra running in local with docker:
  docker run --pull=always --rm -it -p 8080:8080 --user=root -v /var/run/docker.sock:/var/run/docker.sock -v /tmp:/tmp kestra/kestra:latest server local
 ```
 
-And us Kestra backfill since January to July 2021 and using GCP with GCS and Bigquery. Code for this: https://github.com/ramirovazq/ramiro-data-engineering-zoomcamp/tree/main/KESTRA_orchestration/kestra_using_gcp Backfill was done for yellow ant green taxi data
+I used Kestra in backfill since January to July 2021 and using GCP with GCS and Bigquery. Code for this: https://github.com/ramirovazq/ramiro-data-engineering-zoomcamp/tree/main/KESTRA_orchestration/kestra_using_gcp 
+Backfill was done for yellow ant green taxi data
 
 ### TODO paste image
 
