@@ -15,13 +15,13 @@ In this case I used Kestra running in local with docker:
 I used Kestra in backfill since January to July 2021 and using GCP with GCS and Bigquery. Code for this: https://github.com/ramirovazq/ramiro-data-engineering-zoomcamp/tree/main/KESTRA_orchestration/kestra_using_gcp 
 Backfill was done for yellow ant green taxi data
 
-### TODO paste image
+https://github.com/ramirovazq/ramiro-data-engineering-zoomcamp/blob/main/homework_2/jan_july_2021.png
 
 ## Quiz Questions
 
 1. Within the execution for Yellow Taxi data for the year 2020 and month 12: what is the uncompressed file size (i.e. the output file yellow_tripdata_2020-12.csv of the extract task)?
 
-### TODO paste image but image has 128.3MB
+https://github.com/ramirovazq/ramiro-data-engineering-zoomcamp/blob/main/homework_2/yellow_tripdata_2020_12.png
 #### 128.3MB
 
 2. What is the rendered value of the variable file when the inputs taxi is set to green, year is set to 2020, and month is set to 04 during execution?
