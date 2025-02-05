@@ -1,40 +1,53 @@
 # Module Homework 2 - Cohort 2025
 
-For the homework, I'll be considering green taxi dataset:
+## Assignment
 
-https://github.com/DataTalksClub/nyc-tlc-data/releases/tag/green/download.
+So far in the course, we processed data for the year 2019 and 2020. Your task is to extend the existing flows to include data for the year 2021.
 
-To get wget-able links I'll use:
+## Assignment answer
 
-https://github.com/DataTalksClub/nyc-tlc-data/releases/download/green/
+In this case I used Kestra running in local with docker:
 
-## Description
-
-An in-depth paragraph about your project and overview of use.
-
-## Getting Started
-
-### Dependencies
-
-* Describe any prerequisites, libraries, OS version, etc., needed before installing program.
-* ex. Windows 10
-
-### Installing
-
-* How/where to download your program
-* Any modifications needed to be made to files/folders
-
-### Executing program
-
-* How to run the program
-* Step-by-step bullets
 ```
-code blocks for commands
+ docker run --pull=always --rm -it -p 8080:8080 --user=root -v /var/run/docker.sock:/var/run/docker.sock -v /tmp:/tmp kestra/kestra:latest server local
 ```
 
-## Help
+And us Kestra backfill since January to July 2021 and using GCP with GCS and Bigquery. Code for this: https://github.com/ramirovazq/ramiro-data-engineering-zoomcamp/tree/main/KESTRA_orchestration/kestra_using_gcp Backfill was done for yellow ant green taxi data
 
-Any advise for common problems or issues.
+### TODO paste image
+
+## Quiz Questions
+
+1. Within the execution for Yellow Taxi data for the year 2020 and month 12: what is the uncompressed file size (i.e. the output file yellow_tripdata_2020-12.csv of the extract task)?
+
+### TODO paste image but image has 128.3MB
+#### 128.3MB
+
+2. What is the rendered value of the variable file when the inputs taxi is set to green, year is set to 2020, and month is set to 04 during execution?
+
+
+{{inputs.taxi}}_tripdata_{{inputs.year}}-{{inputs.month}}.csv
+* inputs.taxi = 'green'
+* inputs.year = '2020'
+* inputs.month = '04'
+* {{green}}_tripdata_{{2020}}-{{04}}.csv
+
+#### Answer
+green_tripdata_2020-04.csv
+
+3. How many rows are there for the Yellow Taxi data for all CSV files in the year 2020?
+
 ```
-command to run if program contains helper info
+SELECT count(*) as count, '2020_01' as year_month FROM `utility-cathode-448702-g7.de_zoomcamp.yellow_tripdata_2020_01_ext`  UNION ALL
+SELECT count(*) as count, '2020_02' as year_month FROM `utility-cathode-448702-g7.de_zoomcamp.yellow_tripdata_2020_02_ext`  UNION ALL
+SELECT count(*) as count, '2020_03' as year_month FROM `utility-cathode-448702-g7.de_zoomcamp.yellow_tripdata_2020_03_ext`  UNION ALL
+SELECT count(*) as count, '2020_04' as year_month FROM `utility-cathode-448702-g7.de_zoomcamp.yellow_tripdata_2020_04_ext`  UNION ALL
+SELECT count(*) as count, '2020_05' as year_month FROM `utility-cathode-448702-g7.de_zoomcamp.yellow_tripdata_2020_05_ext`  UNION ALL
+SELECT count(*) as count, '2020_06' as year_month FROM `utility-cathode-448702-g7.de_zoomcamp.yellow_tripdata_2020_06_ext`  UNION ALL
+SELECT count(*) as count, '2020_07' as year_month FROM `utility-cathode-448702-g7.de_zoomcamp.yellow_tripdata_2020_07_ext`  UNION ALL
+SELECT count(*) as count, '2020_08' as year_month FROM `utility-cathode-448702-g7.de_zoomcamp.yellow_tripdata_2020_08_ext`  UNION ALL
+SELECT count(*) as count, '2020_09' as year_month FROM `utility-cathode-448702-g7.de_zoomcamp.yellow_tripdata_2020_09_ext`  UNION ALL
+SELECT count(*) as count, '2020_10' as year_month FROM `utility-cathode-448702-g7.de_zoomcamp.yellow_tripdata_2020_10_ext`  UNION ALL
+SELECT count(*) as count, '2020_11' as year_month FROM `utility-cathode-448702-g7.de_zoomcamp.yellow_tripdata_2020_11_ext`  UNION ALL
+SELECT count(*) as count, '2020_12' as year_month FROM `utility-cathode-448702-g7.de_zoomcamp.yellow_tripdata_2020_12_ext`
 ```
