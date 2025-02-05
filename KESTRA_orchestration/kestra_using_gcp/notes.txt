@@ -13,3 +13,6 @@ step 2:
 
 step 3: 
     execute 05_gcp_setup, this generates bigquery_dataset and generates gcp_bucket
+
+step 4:
+    execute 06_gcp_taxi as flow for ingest data in gcp
