@@ -164,7 +164,8 @@ GCP Bucket
 Not always
 
 
-9. 
+### 9. No Points: Write a SELECT count(*) query FROM the materialized table you created. How many bytes does it estimate will be read? Why?
+
 ```
 ```
 #### Answer
