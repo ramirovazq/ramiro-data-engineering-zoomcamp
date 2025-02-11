@@ -111,3 +111,10 @@ WHERE  1=1
 AND tpep_dropoff_datetime >= '2024-03-01' 
 AND tpep_dropoff_datetime <= '2024-03-15'
 -- 26.84MB
+
+-- Question 7: Question 7. Where is the data for external tables stored?
+-- In our case we are using GCP Bucket
+
+--Question 8. Always clustering?
+-- False it depends on datset. For example for smaller dataset < 1GB it's not a good idea 
+-- even could increase costs
