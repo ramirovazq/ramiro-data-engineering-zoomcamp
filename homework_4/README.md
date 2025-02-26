@@ -45,11 +45,10 @@ select *
 from {{ source('raw_nyc_tripdata', 'ext_green_taxi' ) }}
 ```
 
-- `select * from dtc_zoomcamp_2025.raw_nyc_tripdata.ext_green_taxi`
-- `select * from dtc_zoomcamp_2025.my_nyc_tripdata.ext_green_taxi`
+Because of precedence uses: export DBT_BIGQUERY_PROJECT=myproject
+then uses env_var('DBT_BIGQUERY_SOURCE_DATASET', 'raw_nyc_tripdata') because is not set env variables
+
 - `select * from myproject.raw_nyc_tripdata.ext_green_taxi`
-- `select * from myproject.my_nyc_tripdata.ext_green_taxi`
-- `select * from dtc_zoomcamp_2025.raw_nyc_tripdata.green_taxi`
 
 
 ### Question 2: dbt Variables & Dynamic Models
@@ -67,12 +66,8 @@ where pickup_datetime >= CURRENT_DATE - INTERVAL '30' DAY
 
 What would you change to accomplish that in a such way that command line arguments takes precedence over ENV_VARs, which takes precedence over DEFAULT value?
 
-- Add `ORDER BY pickup_datetime DESC` and `LIMIT {{ var("days_back", 30) }}`
-- Update the WHERE clause to `pickup_datetime >= CURRENT_DATE - INTERVAL '{{ var("days_back", 30) }}' DAY`
-- Update the WHERE clause to `pickup_datetime >= CURRENT_DATE - INTERVAL '{{ env_var("DAYS_BACK", "30") }}' DAY`
 - Update the WHERE clause to `pickup_datetime >= CURRENT_DATE - INTERVAL '{{ var("days_back", env_var("DAYS_BACK", "30")) }}' DAY`
-- Update the WHERE clause to `pickup_datetime >= CURRENT_DATE - INTERVAL '{{ env_var("DAYS_BACK", var("days_back", "30")) }}' DAY`
-
+Because: var("days_back") takes precedence in command line, if it's passed in command line it is set. If it's not passed in command line, then tries env_var as second option, if not goes for default.
 
 ### Question 3: dbt Data Lineage and Execution
 
@@ -82,11 +77,8 @@ Considering the data lineage below **and** that taxi_zone_lookup is the **only**
 
 Select the option that does **NOT** apply for materializing `fct_taxi_monthly_zone_revenue`:
 
-- `dbt run`
-- `dbt run --select +models/core/dim_taxi_trips.sql+ --target prod`
-- `dbt run --select +models/core/fct_taxi_monthly_zone_revenue.sql`
-- `dbt run --select +models/core/`
-- `dbt run --select models/staging/+`
+- `dbt run` 
+From my understanding this option runs all .sql files, but doesn't run tests, seeds. That's why this option wouldn't materialize `fct_taxi_monthly_zone_revenue`, cause taxi_zone_lookup comes from a seed.
 
 
 ### Question 4: dbt Macros and Jinja
