@@ -139,11 +139,9 @@ You might want to add some new dimensions `year` (e.g.: 2019, 2020), `quarter` (
 
 Considering the YoY Growth in 2020, which were the yearly quarters with the best (or less worse) and worst results for green, and yellow
 
-- green: {best: 2020/Q2, worst: 2020/Q1}, yellow: {best: 2020/Q2, worst: 2020/Q1}
-- green: {best: 2020/Q2, worst: 2020/Q1}, yellow: {best: 2020/Q3, worst: 2020/Q4}
-- green: {best: 2020/Q1, worst: 2020/Q2}, yellow: {best: 2020/Q2, worst: 2020/Q1}
+
 - green: {best: 2020/Q1, worst: 2020/Q2}, yellow: {best: 2020/Q1, worst: 2020/Q2}
-- green: {best: 2020/Q1, worst: 2020/Q2}, yellow: {best: 2020/Q3, worst: 2020/Q4}
+this comes from https://github.com/ramirovazq/ramiro-data-engineering-zoomcamp/commit/6aee84306e41fad957170609d0a611c471b11a3a
 
 
 ### Question 6: P97/P95/P90 Taxi Monthly Fare
@@ -154,11 +152,22 @@ Considering the YoY Growth in 2020, which were the yearly quarters with the best
 
 Now, what are the values of `p97`, `p95`, `p90` for Green Taxi and Yellow Taxi, in April 2020?
 
-- green: {p97: 55.0, p95: 45.0, p90: 26.5}, yellow: {p97: 52.0, p95: 37.0, p90: 25.5}
+
 - green: {p97: 55.0, p95: 45.0, p90: 26.5}, yellow: {p97: 31.5, p95: 25.5, p90: 19.0}
-- green: {p97: 40.0, p95: 33.0, p90: 24.5}, yellow: {p97: 52.0, p95: 37.0, p90: 25.5}
-- green: {p97: 40.0, p95: 33.0, p90: 24.5}, yellow: {p97: 31.5, p95: 25.5, p90: 19.0}
-- green: {p97: 55.0, p95: 45.0, p90: 26.5}, yellow: {p97: 52.0, p95: 25.5, p90: 19.0}
+https://github.com/ramirovazq/ramiro-data-engineering-zoomcamp/commit/ab360854e5ecaf600b830c1a4a1dd5fcc15ef1ca
+```sql
+SELECT 
+distinct
+service_type,
+pickup_year,
+pickup_month,
+percentile_97,
+percentile_95,
+percentile_90
+FROM `utility-cathode-448702-g7.dbt_hw3_2025.fct_taxi_trips_monthly_fare_p95` 
+WHERE pickup_month = '2020-04-01 00:00:00.000000 UTC'
+LIMIT 1000
+```
 
 
 ### Question 7: Top #Nth longest P90 travel time Location for FHV
