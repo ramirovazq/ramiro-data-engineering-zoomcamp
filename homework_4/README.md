@@ -184,12 +184,21 @@ Now...
 
 For the Trips that **respectively** started from `Newark Airport`, `SoHo`, and `Yorkville East`, in November 2019, what are **dropoff_zones** with the 2nd longest p90 trip_duration ?
 
+https://github.com/ramirovazq/ramiro-data-engineering-zoomcamp/commit/53f6043adf8d54220e562bd2fb319ef19a2d0588
 - LaGuardia Airport, Chinatown, Garment District
-- LaGuardia Airport, Park Slope, Clinton East
-- LaGuardia Airport, Saint Albans, Howard Beach
-- LaGuardia Airport, Rosedale, Bath Beach
-- LaGuardia Airport, Yorkville East, Greenpoint
 
+```
+SELECT *
+FROM `utility-cathode-448702-g7.dbt_hw3_2025.fct_fhv_monthly_zone_traveltime_p90` 
+WHERE 1=1
+--AND pickup_zone in ('Newark Airport', 'SoHo', 'Yorkville East')
+--AND pickup_zone = 'Newark Airport'
+--AND pickup_zone = 'SoHo'
+AND pickup_zone = 'Yorkville East'
+AND pickup_year = '2019-01-01'
+AND pickup_month = '2019-11-01'
+order by trip_duration_p90 desc
+```
 
 ## Submitting the solutions
 
