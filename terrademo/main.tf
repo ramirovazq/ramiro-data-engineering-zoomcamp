@@ -32,3 +32,7 @@ resource "google_bigquery_dataset" "demo_dataset" {
   dataset_id = var.bq_dataset_name
   location   = var.location
 }
+
+# This code is compatible with Terraform 4.25.0 and versions that are backwards compatible to 4.25.0.
+# For information about validating this Terraform code, see https://developer.hashicorp.com/terraform/tutorials/gcp-get-started/google-cloud-platform-build#format-and-validate-the-configuration
+

@@ -1,0 +1,18 @@
+step 0: 
+    save in Kestra: Namespaces > zoomcamp namespace > KV_store
+        GCP_CREDS (credential file in json)
+step 1:
+    then in 04_gcp_kv fill:
+    - gcp_project_id
+    - gcp_location (that in fact is regional)
+    - gcp_bucket_name
+    - gcp_dataset (for big query)
+
+step 2:
+    then execute: 04_gcp_kv.yaml flow this setups in KV_store necessary values
+
+step 3: 
+    execute 05_gcp_setup, this generates bigquery_dataset and generates gcp_bucket
+
+step 4:
+    execute 06_gcp_taxi as flow for ingest data in gcp

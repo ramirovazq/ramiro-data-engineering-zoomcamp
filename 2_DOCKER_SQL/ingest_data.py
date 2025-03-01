@@ -23,13 +23,16 @@ def main(params):
     file_name = url.rsplit('/', 1)[-1].strip()
     print(f'Downloading {file_name} ...')
     # Download file from url
-    os.system(f'curl {url.strip()} -o {file_name}')
+    #os.system(f'curl {url.strip()} -o {file_name}')
 
     engine = create_engine(f'postgresql://{user}:{password}@{host}:{port}/{db}')
 
     if '.csv' in file_name:
-        df = pd.read_csv(file_name, nrows=10)
-        df_iter = pd.read_csv(file_name, iterator=True, chunksize=100000)
+        print("-------------------/////////--------------------")
+        df = pd.read_csv(file_name, nrows=10, compression='gzip', dtype={'store_and_fwd_flag': str})
+        df.lpep_pickup_datetime = pd.to_datetime(df.lpep_pickup_datetime)
+        df.lpep_dropoff_datetime = pd.to_datetime(df.lpep_dropoff_datetime)
+        df_iter = pd.read_csv(file_name, iterator=True, chunksize=100000, dtype={'store_and_fwd_flag': str})
     elif '.parquet' in file_name:
         file = pq.ParquetFile(file_name)
         df = next(file.iter_batches(batch_size=10)).to_pandas()
@@ -83,4 +86,5 @@ if __name__ == "__main__":
 
 #URL = 'https://s3.amazonaws.com/ny-tlc/trip+data/yellow_tripdata_2021-01.csv'
 #URL='https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2021-01.parquet'
-#python ingest_data.py --user=root --password=root --host=localhost --port=5432 --db=ny_taxi --table_name=yellow_taxi_trips --url=${URL}
+#URL='https://github.com/DataTalksClub/nyc-tlc-data/releases/download/green/green_tripdata_2019-10.csv.gz'
+#python ingest_data.py --user=root --password=root --host=localhost --port=5432 --db=ny_taxi --table_name=green_taxi_trips --url=${URL}

@@ -2,9 +2,11 @@
 *.csv
 *.gz
 2_DOCKER_SQL/ny_taxi_postgres_data/
+KESTRA_orchestration/ny_taxi_postgres_data/
+KESTRA_orchestration/raw_file/*.csv
 
 terrademo/keys/*.json
-
+3_data_warehouse/keys/*.json
 
 # Local .terraform directories
 **/.terraform/*

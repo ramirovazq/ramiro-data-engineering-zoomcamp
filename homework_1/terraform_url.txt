@@ -1,0 +1,2 @@
+For "in this section homework we'll prepare the environment by creating resources in GCP with Terraform."
+URL: https://github.com/ramirovazq/ramiro-data-engineering-zoomcamp/tree/main/terrademo

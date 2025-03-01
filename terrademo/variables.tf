@@ -16,12 +16,12 @@ variable "region" {
 
 variable "bq_dataset_name" {
   description = "My BigQuery Dataset Name"
-  default     = "demo_dataset"
+  default     = "448702_dezoomcamp_hw3"
 }
 
 variable "gcs_bucket_name" {
   description = "My Storage Bucket Name"
-  default     = "utility-cathode-448702-g7-terra-bucket"
+  default     = "448702-dezoomcamp_hw3_2025"
 }
 
 variable "gcs_storage_class" {
