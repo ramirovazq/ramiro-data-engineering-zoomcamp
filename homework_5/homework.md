@@ -39,10 +39,18 @@ How many taxi trips were there on the 15th of October?
 
 Consider only trips that started on the 15th of October.
 
-- 85,567
-- 105,567
 - 125,567
-- 145,567
+
+```
+df_repartitioned.createOrReplaceTempView('trips_repartitioned')
+query_repartitioned = """
+SELECT * FROM trips_repartitioned 
+WHERE TO_DATE(FROM_UTC_TIMESTAMP(tpep_pickup_datetime, 'Europe/Berlin')) = '2024-10-15'
+"""
+df_filtered_repartitioned = spark.sql(query_repartitioned)
+df_filtered_repartitioned.count()
+```
+
 
 
 ## Question 4: Longest trip
