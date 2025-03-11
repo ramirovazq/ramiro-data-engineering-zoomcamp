@@ -57,10 +57,23 @@ df_filtered_repartitioned.count()
 
 What is the length of the longest trip in the dataset in hours?
 
-- 122
-- 142
 - 162
-- 182
+
+```
+query_longest_trip = """
+SELECT 
+    tpep_pickup_datetime as start,
+    tpep_dropoff_datetime as end,
+    UNIX_TIMESTAMP(tpep_dropoff_datetime) - UNIX_TIMESTAMP(tpep_pickup_datetime) AS difference,
+    (UNIX_TIMESTAMP(tpep_dropoff_datetime) - UNIX_TIMESTAMP(tpep_pickup_datetime)) / 3600 AS difference_hrs,
+    (UNIX_TIMESTAMP(tpep_dropoff_datetime) - UNIX_TIMESTAMP(tpep_pickup_datetime)) / (3600*12) AS difference_days
+FROM trips 
+ORDER BY 3 desc
+LIMIT 100
+"""
+df_longest = spark.sql(query_longest_trip)
+df_longest.show()
+```
 
 
 ## Question 5: User Interface
