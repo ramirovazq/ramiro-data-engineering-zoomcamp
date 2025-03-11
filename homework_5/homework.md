@@ -96,9 +96,43 @@ wget https://d37ci6vzurychx.cloudfront.net/misc/taxi_zone_lookup.csv
 Using the zone lookup data and the Yellow October 2024 data, what is the name of the LEAST frequent pickup location Zone?
 
 - Governor's Island/Ellis Island/Liberty Island
-- Arden Heights
-- Rikers Island
-- Jamaica Bay
+```
+df_lookup = spark.read \
+    .option("header","true")\
+    .csv('code/data/homework/raw/taxi_zone_lookup.csv')
+
+df_lookup.createOrReplaceTempView('lookup_table')
+
+query_least_frequent = """
+SELECT 
+    p.pickup_location_id,
+    l.Borough,
+    l.Zone,
+    l.service_zone
+FROM(
+SELECT 
+    PULocationID as pickup_location_id,
+    COUNT(PULocationID) AS count_pu_location
+FROM trips 
+WHERE YEAR(tpep_pickup_datetime) = 2024
+AND MONTH(tpep_pickup_datetime) = 10
+GROUP BY PULocationID
+ORDER BY 2 asc
+limit 1
+)  p
+LEFT JOIN lookup_table l ON l.LocationID = p.pickup_location_id
+"""
+df_least = spark.sql(query_least_frequent)
+df_least.show()
+
+
++------------------+---------+--------------------+------------+
+|pickup_location_id|  Borough|                Zone|service_zone|
++------------------+---------+--------------------+------------+
+|               105|Manhattan|Governor's Island...| Yellow Zone|
++------------------+---------+--------------------+------------+
+```
+
 
 
 ## Submitting the solutions
