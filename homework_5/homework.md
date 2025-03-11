@@ -22,7 +22,14 @@ What is the average size of the Parquet (ending with .parquet extension) Files t
 
 
 - 25MB
+
+```
+df_repartitioned = df.repartition(4) ## this is a lazy command
+df_repartitioned.write.parquet('code/data/homework/partitioned')
+```
+
 https://github.com/ramirovazq/ramiro-data-engineering-zoomcamp/blob/main/homework_5/question_2_code.png
+
 https://github.com/ramirovazq/ramiro-data-engineering-zoomcamp/blob/main/homework_5/question_2_list.png
 
 
