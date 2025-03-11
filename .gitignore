@@ -5,6 +5,12 @@
 KESTRA_orchestration/ny_taxi_postgres_data/
 KESTRA_orchestration/raw_file/*.csv
 
+5_batch/code/*
+5_batch/fhvhv/*
+5_batch/zones/*
+5_batch/fhvhv_tripdata_2021-01.parquet
+5_batch/notebooks_vm_google/*
+
 terrademo/keys/*.json
 3_data_warehouse/keys/*.json
 
