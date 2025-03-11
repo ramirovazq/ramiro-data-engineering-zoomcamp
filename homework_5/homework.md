@@ -20,10 +20,10 @@ Repartition the Dataframe to 4 partitions and save it to parquet.
 
 What is the average size of the Parquet (ending with .parquet extension) Files that were created (in MB)? Select the answer which most closely matches.
 
-- 6MB
+
 - 25MB
-- 75MB
-- 100MB
+https://github.com/ramirovazq/ramiro-data-engineering-zoomcamp/blob/main/homework_5/question_2_code.png
+https://github.com/ramirovazq/ramiro-data-engineering-zoomcamp/blob/main/homework_5/question_2_list.png
 
 
 ## Question 3: Count records 
