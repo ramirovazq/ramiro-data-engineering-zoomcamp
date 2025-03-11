@@ -80,11 +80,9 @@ df_longest.show()
 
 Spark’s User Interface which shows the application's dashboard runs on which local port?
 
-- 80
-- 443
 - 4040
-- 8080
 
+https://github.com/ramirovazq/ramiro-data-engineering-zoomcamp/blob/main/homework_5/question_5.png
 
 
 ## Question 6: Least frequent pickup location zone
