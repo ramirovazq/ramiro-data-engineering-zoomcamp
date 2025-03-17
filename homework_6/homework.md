@@ -99,6 +99,30 @@ Read the output of `help` and based on it, create a topic with name `green-trips
 What's the output of the command for creating a topic? Include the entire output in your answer.
 
 
+```
+$ rpk help
+$ rpk help topic
+$ rpk help topic create
+$ rpk topic create green-trips --dry
+
+TOPIC        STATUS
+green-trips  OK
+
+
+$ rpk topic list
+NAME  PARTITIONS  REPLICAS
+
+$ rpk topic create green-trips
+TOPIC        STATUS
+green-trips  OK
+
+$ rpk topic list
+NAME         PARTITIONS  REPLICAS
+green-trips  1
+```
+
+
+
 ## Question 3. Connecting to the Kafka server
 
 We need to make sure we can connect to the server, so
