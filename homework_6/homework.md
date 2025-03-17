@@ -161,7 +161,7 @@ producer.bootstrap_connected()
 Provided that you can connect to the server, what's the output
 of the last command?
 
-https://github.com/ramirovazq/ramiro-data-engineering-zoomcamp/blob/main/homework_6/bootstrap_connection_ok.png
+![screenshot](https://github.com/ramirovazq/ramiro-data-engineering-zoomcamp/blob/main/homework_6/bootstrap_connection_ok.png)
 
 ## Question 4: Sending the Trip Data
 
