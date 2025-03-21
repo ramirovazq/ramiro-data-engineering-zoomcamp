@@ -1,0 +1,9 @@
+version: 2
+
+sources:
+  - name: staging
+    database: LEARN
+    schema: TRAINNING
+
+    tables:
+      - name: YELLOW_TRIP_DATA_RLOPEZC
