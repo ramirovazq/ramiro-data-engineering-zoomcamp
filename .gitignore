@@ -56,3 +56,4 @@ terraform.rc
 
 
 2_DOCKER_SQL/*parquet
+.qodo

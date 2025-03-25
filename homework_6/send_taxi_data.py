@@ -58,5 +58,5 @@ def main(test):
 
 
 if __name__ == "__main__":
-    test = False
+    test = True
     main(test)
