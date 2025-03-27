@@ -63,11 +63,14 @@ $ docker run -it \
   $ terraform apply
   $ terraform destroy
 
-  $ docker run -it \
-  taxi_ingest:v001  \
-  --user=root \
-  --password=root \
-  --host=pg-database \
-  --port=5432 \
-  --db=ny_taxi \
-  --table_name=green_taxi_trips --url=${URL}
+
+  -- RUN Ingestion Containers in GCP
+  in docker-compose.yaml important to take care of volume using data directory and adding .dockerignore file with data inside
+  - "./data/ny_taxi_postgres_data:/var/lib/postgresql/data:rw"
+  - using $ docker network ls 
+  - we could know find name of network, in this case: 2_docker_sql_default
+  - host comes from docker-compose.yaml in name of service, in this case: pg-database:
+
+  -- COMMAND TO run container
+  URL="https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2021-01.parquet"
+  $ docker run -it   --network=2_docker_sql_default   taxi_ingest:v001    --user=root   --password=root   --host=pg-database   --port=5432   --db=ny_taxi   --table_name=yellow_taxi_trips --url=${URL}
