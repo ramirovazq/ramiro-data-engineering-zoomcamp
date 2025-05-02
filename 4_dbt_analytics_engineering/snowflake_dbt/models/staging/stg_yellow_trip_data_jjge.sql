@@ -10,7 +10,7 @@ with tripdata as (
         partition by vendorid, tpep_pickup_datetime 
         order by tpep_pickup_datetime
     ) as rn
-    from {{ source('staging', 'YELLOW_TRIP_DATA_JJGE') }}
+    from {{ source('staging', 'YELLOW_TRIP_DATA_jjge') }}
     where vendorid is not null
 )
 
