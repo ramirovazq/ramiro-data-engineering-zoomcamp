@@ -1,7 +1,7 @@
 {{ config(materialized='table') }}
 
 with trips_data as (
-    select * from {{ ref('fact_trips_rbvs') }}
+    select * from {{ ref('fact_trips_JJGE') }}
 )
     select 
     -- Revenue grouping 

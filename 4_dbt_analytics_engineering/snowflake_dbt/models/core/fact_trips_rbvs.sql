@@ -7,12 +7,12 @@
 with green_tripdata as (
     select *, 
         'Green' as service_type
-    from {{ ref('stg_green_trip_data_rbvs') }}
+    from {{ ref('stg_green_trip_data_JJGE') }}
 ), 
 yellow_tripdata as (
     select *, 
         'Yellow' as service_type
-    from {{ ref('stg_yellow_trip_data_rbvs') }}
+    from {{ ref('stg_yellow_trip_data_JJGE') }}
 ), 
 trips_unioned as (
     select * from green_tripdata
@@ -20,7 +20,7 @@ trips_unioned as (
     select * from yellow_tripdata
 ), 
 dim_zones as (
-    select * from {{ ref('dim_zones_rbvs') }}
+    select * from {{ ref('dim_zones_JJGE') }}
     where borough != 'Unknown'
 )
 select trips_unioned.tripid, 

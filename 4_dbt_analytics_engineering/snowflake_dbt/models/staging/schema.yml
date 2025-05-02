@@ -6,12 +6,12 @@ sources:
     schema: TRAINNING 
 
     tables:
-      - name: YELLOW_TRIP_DATA_RBVS
+      - name: YELLOW_TRIP_DATA_JJGE
 
-      - name: GREEN_TRIP_DATA_RBVS
+      - name: GREEN_TRIP_DATA_JJGE
 
 models:
-  - name: stg_yellow_trip_data_rbvs
+  - name: stg_yellow_trip_data_JJGE
     description: ""
     columns:
       - name: tripid
@@ -37,7 +37,7 @@ models:
         tests:
           - relationships:
               field: locationid
-              to: ref('taxi_zone_lookups_rbvs')
+              to: ref('taxi_zone_lookups_JJGE')
               severity: warn
             
 
@@ -114,7 +114,7 @@ models:
         data_type: varchar
         description: ""
 
-  - name: stg_green_trip_data_rbvs
+  - name: stg_green_trip_data_JJGE
     description: ""
     columns:
       - name: tripid

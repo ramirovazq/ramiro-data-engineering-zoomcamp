@@ -11,7 +11,7 @@ with tripdata as
         partition by vendorid, lpep_pickup_datetime 
         order by lpep_pickup_datetime
     ) as rn
-  from {{ source('staging','GREEN_TRIP_DATA_RBVS') }}
+  from {{ source('staging','GREEN_TRIP_DATA_JJGE') }}
   where vendorid is not null 
 )
 select
