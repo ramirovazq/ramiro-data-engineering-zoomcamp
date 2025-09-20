@@ -16,12 +16,12 @@ variable "region" {
 
 variable "bq_dataset_name" {
   description = "My BigQuery Dataset Name"
-  default     = "448702_dezoomcamp_hw3"
+  default     = "vial_incidents"
 }
 
 variable "gcs_bucket_name" {
-  description = "My Storage Bucket Name"
-  default     = "448702-dezoomcamp_hw3_2025"
+  description = "My Data Lake for vial incidents files dezoomcamp final project"
+  default     = "vial_incidents"
 }
 
 variable "gcs_storage_class" {
