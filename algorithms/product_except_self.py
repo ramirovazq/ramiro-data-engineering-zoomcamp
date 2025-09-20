@@ -1,5 +1,11 @@
 from typing import List
 
+'''
+Given an array nums of n integers where n > 1, 
+return an array output such that each element at index i of output 
+is equal to the product of all the numbers in the original array except nums[i].
+'''
+
 def productExceptSelf_1(nums: List[int]) -> List[int]:
 
     result = [1 for x in range(0,len(nums))]
