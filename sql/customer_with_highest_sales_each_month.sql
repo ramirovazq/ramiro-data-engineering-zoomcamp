@@ -18,8 +18,8 @@ GROUP BY id, month
 -- AS CTE
 WITH monthly_sales AS (
   SELECT 
-    id as id,
-    month as month,
+    id,
+    month,
     SUM(sales) as total_sales
   FROM playground.sales 
 GROUP BY id, month
@@ -29,7 +29,10 @@ ranked_sales AS (
     id,
     month,
     total_sales,
-    RANK() OVER (PARTITION BY month ORDER BY total_sales desc) as rank  
+    RANK() OVER (
+        PARTITION BY month 
+        ORDER BY total_sales desc
+    ) as rank  
     FROM monthly_sales
 )
 SELECT 
@@ -38,5 +41,5 @@ SELECT
   total_sales,
   rank
 FROM ranked_sales
-WHERE RANK IN (1,2)
-ORDER BY month desc
+WHERE rank IN (1,2)
+ORDER BY month desc;
