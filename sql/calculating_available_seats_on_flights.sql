@@ -8,26 +8,20 @@
 -- Order the results by flight_id in ascending order. 
 -- Ensure consistency in purchases, with no records for non-existing flight_ids or seat_nos.
 
-WITH flight_capacity AS (
-    SELECT 
-        f.flight_id,
-        f.plane_id,    
-        pl.number_of_seats
-    FROM playground.flights f
-    INNER JOIN playground.planes pl
-    ON f.plane_id = pl.plane_id
-), purchased_seats_per_flight AS (
+WITH purchased_seats_per_flight AS (
     SELECT
         flight_id,
         COUNT(seat_no) AS purchased_seats
     FROM playground.purchases
     GROUP BY flight_id
 )
-SELECT
-    fc.flight_id,
-    --ts.plane_id,
-    fc.number_of_seats - COALESCE(ps.purchased_seats,0) AS free_seats
-FROM flight_capacity fc
+SELECT 
+    f.flight_id,
+    pl.plane_id,    
+    pl.number_of_seats - COALESCE(ps.purchased_seats,0) AS free_seats
+FROM playground.flights f
+INNER JOIN playground.planes pl
+ON f.plane_id = pl.plane_id
 LEFT JOIN purchased_seats_per_flight ps
-ON ts.flight_id = ps.flight_id
-ORDER BY ts.flight_id ASC
+ON f.flight_id = ps.flight_id
+ORDER BY f.flight_id ASC;
