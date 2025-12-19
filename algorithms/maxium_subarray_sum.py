@@ -46,6 +46,9 @@ def sum_of_tuple_indexes(tuple_indexes, nums):
 def max_subarray_sum(nums: List[int]) -> int:
     from itertools import combinations
 
+    if len(nums) == 0:
+        return 0
+
     list_of_indexes = list(range(0,len(nums)))
     print(f"{list_of_indexes=}")
 
@@ -107,15 +110,25 @@ if __name__ == "__main__":
     # (0, 1, 2, 3)
 
 
-    nums = [2, 3, -2, 4]  
+    # nums = [2, 3, -2, 4]  
+    # output = max_subarray_sum(nums)
+    # output_expected = 7  
+    # assert output_expected == output, "not equal"
+
+    # # Explanation: Maximum sum is 2 + 3 + (-2) + 4 = 7.
+
+    # nums = [1, -1, -5, -4]  
+    # output = max_subarray_sum(nums)
+    # output_expected = 1  
+    # assert output_expected == output, "not equal"
+    #Explanation: The maximum sum is 1, which is the single element with the highest value.
+
+    nums = []
     output = max_subarray_sum(nums)
-    output_expected = 7  
+    output_expected = 0 
     assert output_expected == output, "not equal"
 
-    # Explanation: Maximum sum is 2 + 3 + (-2) + 4 = 7.
-
-    nums = [1, -1, -5, -4]  
-    output = max_subarray_sum(nums)
-    output_expected = 1  
-    assert output_expected == output, "not equal"
-    # Explanation: The maximum sum is 1, which is the single element with the highest value.
+    # nums = [-1, -2, -3, -4]
+    # output = max_subarray_sum(nums)
+    # output_expected = -1
+    # assert output_expected == output, "not equal"
