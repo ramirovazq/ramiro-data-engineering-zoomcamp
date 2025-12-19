@@ -31,29 +31,45 @@ def verify_continuity(list_of_tuples):
             final_list.append(returned_tuple)
     return final_list
 
+def sum_of_tuple_indexes(tuple_indexes, nums):
+    total = 0 
+    print("============start")
+    print(f"{tuple_indexes=}")
+    print(f"{nums=}")
+    for index in tuple_indexes:
+        print(f"{nums[index]=}")
+        total += nums[index]
+    print(f"{total=}")
+    print("============end")
+    return total 
+
 def max_subarray_sum(nums: List[int]) -> int:
     from itertools import combinations
 
-    list_index = list(range(0,len(nums)))
-    print(f"{list_index=}")
+    list_of_indexes = list(range(0,len(nums)))
+    print(f"{list_of_indexes=}")
 
-    all_combinatons = []
+    all_combinatons_of_indexes = []
     for x in range(1,len(nums)+1):
-        z = list(combinations(list_index, x))
-        all_combinatons.append(z)
+        z = list(combinations(list_of_indexes, x))
+        all_combinatons_of_indexes.append(z)
     
-    print(f"{all_combinatons=}")
+    print(f"{all_combinatons_of_indexes=}")
 
     all_continius_combinations = []
-    for sub_list in all_combinatons:
+    for sub_list in all_combinatons_of_indexes:
             sub_list_continuity = verify_continuity(sub_list)   
             all_continius_combinations.append(sub_list_continuity)
     print(f"{all_continius_combinations=}")
 
-    max_sum = None
+    max_sum = float('-inf')
     #[[(0,), (1,), (2,), (3,)], [(0, 1), (1, 2), (2, 3)], [(0, 1, 2), (1, 2, 3)], [(0, 1, 2, 3)]]
     for list_of_tuples in all_continius_combinations:
         for tuple_ in list_of_tuples:
+            print(f"{tuple_=}")
+            result_sum = sum_of_tuple_indexes(tuple_, nums)
+            if result_sum > max_sum:
+                max_sum = result_sum
 
 
     # 0 1 2 3 <-- original
@@ -67,7 +83,7 @@ def max_subarray_sum(nums: List[int]) -> int:
     # 2
     # 2 3 
     # 3
-    return 0
+    return max_sum
 
 if __name__ == "__main__":
 
@@ -98,6 +114,8 @@ if __name__ == "__main__":
 
     # Explanation: Maximum sum is 2 + 3 + (-2) + 4 = 7.
 
-    # nums = [1, -1, -5, -4]  
-    # output_expected = 1  
+    nums = [1, -1, -5, -4]  
+    output = max_subarray_sum(nums)
+    output_expected = 1  
+    assert output_expected == output, "not equal"
     # Explanation: The maximum sum is 1, which is the single element with the highest value.
