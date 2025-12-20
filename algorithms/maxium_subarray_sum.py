@@ -43,7 +43,7 @@ def sum_of_tuple_indexes(tuple_indexes, nums):
     print("============end")
     return total 
 
-def max_subarray_sum(nums: List[int]) -> int:
+def max_subarray_sum_myversion(nums: List[int]) -> int:
     from itertools import combinations
 
     if len(nums) == 0:
@@ -88,6 +88,29 @@ def max_subarray_sum(nums: List[int]) -> int:
     # 3
     return max_sum
 
+
+# Given an array of integers nums, write a function maxSubarraySum 
+# to find the maximum sum of a contiguous subarray within the array
+# and return that maximum sum. The subarray must be contiguous, 
+# meaning that the elements must appear consecutively in the original array.
+
+def max_subarray_sum(nums: List[int]) -> int:
+    if not nums:
+        return 0
+
+    # Initialize the variables
+    max_current = nums[0]
+    max_global  = nums[0]    
+
+    for num in nums[1:]:
+        print(num)
+        max_current = max(num, max_current + num)
+        if max_current > max_global:
+            max_global = max_current
+
+    return max_global
+
+
 if __name__ == "__main__":
 
 
@@ -110,10 +133,10 @@ if __name__ == "__main__":
     # (0, 1, 2, 3)
 
 
-    # nums = [2, 3, -2, 4]  
-    # output = max_subarray_sum(nums)
-    # output_expected = 7  
-    # assert output_expected == output, "not equal"
+    nums = [2, 3, -2, 4]  
+    output = max_subarray_sum(nums)
+    output_expected = 7  
+    assert output_expected == output, "not equal"
 
     # # Explanation: Maximum sum is 2 + 3 + (-2) + 4 = 7.
 
@@ -121,12 +144,12 @@ if __name__ == "__main__":
     # output = max_subarray_sum(nums)
     # output_expected = 1  
     # assert output_expected == output, "not equal"
-    #Explanation: The maximum sum is 1, which is the single element with the highest value.
+    # #Explanation: The maximum sum is 1, which is the single element with the highest value.
 
-    nums = []
-    output = max_subarray_sum(nums)
-    output_expected = 0 
-    assert output_expected == output, "not equal"
+    # nums = []
+    # output = max_subarray_sum(nums)
+    # output_expected = 0 
+    # assert output_expected == output, "not equal"
 
     # nums = [-1, -2, -3, -4]
     # output = max_subarray_sum(nums)
