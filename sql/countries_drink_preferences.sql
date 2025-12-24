@@ -31,19 +31,6 @@ WITH preferred_drinks AS (
         WHEN spirit_servings >= beer_servings AND spirit_servings >= wine_servings THEN 'Spirit'
         ELSE 'Wine' END 
         AS first_serving,
-    CASE 
-        WHEN beer_servings <= spirit_servings AND beer_servings <= wine_servings THEN 'Beer'
-        WHEN spirit_servings <= beer_servings AND spirit_servings <= wine_servings  THEN 'Spirit'
-        WHEN wine_servings <= beer_servings AND wine_servings <= spirit_servings  THEN 'Wine'
-        ELSE 'Other' END
-        AS third_serving,
-    CASE 
-        WHEN first_serving = 'Wine' and third_serving = 'Spirit' THEN 'Beer'
-        WHEN first_serving = 'Spirit' and third_serving = 'Wine' THEN 'Beer'
-        WHEN first_serving = 'Beer' and third_serving = 'Wine' THEN 'Spirit'
-        WHEN first_serving = 'Wine' and third_serving = 'Beer' THEN 'Spirit'
-        ELSE 'Wine' END
-        AS second_serving,
     total_litres_of_pure_alcohol
     FROM playground.drinks
     WHERE total_litres_of_pure_alcohol > 0
