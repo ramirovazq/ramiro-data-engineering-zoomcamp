@@ -23,25 +23,22 @@ Albania, 89, 132, 54, 4.9, Spirit, Beer, Wine
 WITH preferred_drinks AS (
     SELECT 
     country, 
-    spirit_servings, 
-    wine_servings,
-    beer_servings, 
     CASE 
-        WHEN beer_servings >= spirit_servings AND beer_servings >= wine_servings THEN 'Beer'
-        WHEN spirit_servings >= beer_servings AND spirit_servings >= wine_servings THEN 'Spirit'
+        WHEN beer_servings >= spirit_servings 
+         AND beer_servings >= wine_servings 
+        THEN 'Beer'
+        WHEN spirit_servings >= beer_servings 
+         AND spirit_servings >= wine_servings 
+        THEN 'Spirit'
         ELSE 'Wine' END 
-        AS first_serving,
-    total_litres_of_pure_alcohol
+        AS preferred_drink
     FROM playground.drinks
     WHERE total_litres_of_pure_alcohol > 0
   --AND country in ('Austria', 'Azerbaijan', 'Bolivia', 'Cameroon','Ecuador','Guinea','Latvia','Mali', 'Albania', 'Argentina', 'Belize', 'Costa Rica')
 )
 SELECT 
   country,
---   spirit_servings, 
---   wine_servings,
---   beer_servings, 
-  first_serving as preferred_drink
+  preferred_drink
 FROM preferred_drinks
-WHERE first_serving IN ('Wine', 'Spirit')
+WHERE preferred_drink IN ('Wine', 'Spirit')
 ORDER BY country
