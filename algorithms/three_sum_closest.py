@@ -37,3 +37,9 @@ if __name__ == "__main__":
     my_result = threeSumClosest(nums, target)
     print(my_result)
     assert my_result == 2
+
+    nums = [0,0,0]
+    target = 1
+    my_result = threeSumClosest(nums, target)
+    print(my_result)
+    assert my_result == 0
