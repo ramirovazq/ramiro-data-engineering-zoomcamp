@@ -33,3 +33,19 @@ business_events_with_avg AS (
     WHERE bea.occurences > bea.avg_occurences
     GROUP BY bea.business_id
     HAVING COUNT(*) >= 1;
+
+    --- second option
+with business_events_with_avg AS (
+        SELECT
+        business_id,
+        event_type,
+        occurences,
+        AVG(occurences) OVER (PARTITION BY event_type) AS avg_occurences
+        FROM playground.business_events
+)
+SELECT 
+business_id 
+FROM business_events_with_avg 
+WHERE occurences > avg_occurences
+GROUP BY business_id
+HAVING COUNT(*) >= 1;
