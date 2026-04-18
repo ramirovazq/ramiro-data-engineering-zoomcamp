@@ -41,22 +41,18 @@ WITH purchase_count_by_region_subcategory AS (
     SELECT 
         region,
         sub_category,
-        count(quantity) AS purchase_count
+        count(*) AS purchase_count,
+        RANK() OVER(
+            PARTITION BY region
+            ORDER BY purchase_count DESC
+        ) as rnk
     FROM playground.superstore 
     GROUP BY region, sub_category
-), 
-more_purchase_count_ranked AS (
-    SELECT 
-        region,
-        sub_category,
-        purchase_count,
-        rank() over(partition by region order by purchase_count desc) as more_puchase_count
-    FROM purchase_count_by_region_subcategory
-) 
+)
 SELECT 
   region, 
   sub_category, 
   purchase_count
-FROM more_purchase_count_ranked
-WHERE more_puchase_count = 1
+FROM purchase_count_by_region_subcategory
+WHERE rnk = 1
 ORDER BY region asc
