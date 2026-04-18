@@ -1,0 +1,62 @@
+-- Most Frequently Purchased Sub-Category in Each Region
+ 
+
+-- Write a SQL query to determine the most frequently purchased sub-category in each region
+-- based on the playground.superstore dataset. 
+-- The result should include the region, sub-category, and the count of purchases, 
+-- and should list only the top sub-category for each region. 
+-- Display the result in ascending order of the region
+-- These are the tables to query for this question:
+-- playground.superstore
+
+--     row_id int
+--     order_id string
+--     order_date date
+--     ship_date date
+--     ship_mode string
+--     customer_id string
+--     customer_name string
+--     segment string
+--     country string
+--     city string
+--     state string
+--     postal_code int
+--     region string
+--     product_id string
+--     category string
+--     sub_category string
+--     product_name string
+--     sales string
+--     quantity string
+--     discount string
+--     profit double
+
+-- Your answer should include these columns:
+
+--     region varchar
+--     sub_category varchar
+--     purchase_count bigint
+
+WITH purchase_count_by_region_subcategory AS (
+    SELECT 
+        region,
+        sub_category,
+        count(quantity) AS purchase_count
+    FROM playground.superstore 
+    GROUP BY region, sub_category
+), 
+more_purchase_count_ranked AS (
+    SELECT 
+        region,
+        sub_category,
+        purchase_count,
+        rank() over(partition by region order by purchase_count desc) as more_puchase_count
+    FROM purchase_count_by_region_subcategory
+) 
+SELECT 
+  region, 
+  sub_category, 
+  purchase_count
+FROM more_purchase_count_ranked
+WHERE more_puchase_count = 1
+ORDER BY region asc
