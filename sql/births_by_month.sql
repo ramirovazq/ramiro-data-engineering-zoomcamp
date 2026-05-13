@@ -16,16 +16,10 @@
 --     month integer
 --     total_births integer
 
-WITH births_by_month AS (
   SELECT 
     month,
     SUM(births) AS total_births
   FROM playground.us_birth_stats 
   GROUP BY month
-)
-SELECT 
-  month,
-  total_births
-FROM births_by_month
-ORDER BY total_births desc
-LIMIT 1
+  ORDER BY total_births desc
+  LIMIT 1
