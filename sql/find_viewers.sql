@@ -26,8 +26,7 @@ WITH group_by_same_article as (
   SELECT 
     view_date, 
     viewer_id, 
-    article_id,
-    count(*) as count_different_articles
+    article_id
   FROM playground.views 
   GROUP BY view_date, viewer_id, article_id
 )
@@ -38,3 +37,4 @@ FROM group_by_same_article
 GROUP BY view_date, viewer_id
 HAVING count(*) > 1
 ORDER BY viewer_id asc
+
