@@ -38,3 +38,18 @@ GROUP BY view_date, viewer_id
 HAVING count(*) > 1
 ORDER BY viewer_id asc
 
+-- same query without CTE
+SELECT 
+  viewer_id
+FROM (
+    SELECT 
+    view_date, 
+    viewer_id, 
+    article_id
+  FROM playground.views 
+  GROUP BY view_date, viewer_id, article_id
+) 
+GROUP BY view_date, viewer_id
+HAVING count(*) > 1
+ORDER BY viewer_id asc
+
