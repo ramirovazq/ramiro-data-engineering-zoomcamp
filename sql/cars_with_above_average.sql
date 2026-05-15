@@ -35,21 +35,10 @@
 SELECT
   brand_name,
   fuel_type,
-  AVG(engine_size) average_engine_size
-FROM playground.automobile 
-GROUP BY 1,2;
-
-WITH average_engine_size AS (
-  SELECT
-    AVG(engine_size) OVER(PARTITION BY brand_name, fuel_type) as avg_engine_size,
-    brand_name,
-    fuel_type,
-    engine_size
-  FROM playground.automobile 
-)
-SELECT 
-  brand_name,
-  fuel_type,
   engine_size
-FROM average_engine_size
-WHERE engine_size > avg_engine_size
+FROM playground.automobile 
+WHERE engine_size > (SELECT
+  AVG(engine_size) average_engine_size
+FROM playground.automobile )
+ORDER BY engine_size DESC, brand_name ASC
+
