@@ -42,3 +42,18 @@ WHERE engine_size > (SELECT
 FROM playground.automobile )
 ORDER BY engine_size DESC, brand_name ASC
 
+--
+SELECT
+  brand_name,
+  fuel_type,
+  engine_size
+FROM (
+  SELECT
+    brand_name,
+    fuel_type,
+    engine_size,
+    AVG(engine_size) OVER() AS average_of_all_engines
+  FROM playground.automobile     
+)
+WHERE engine_size > average_of_all_engines
+ORDER BY engine_size DESC, brand_name ASC
